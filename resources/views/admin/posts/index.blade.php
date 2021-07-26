@@ -6,7 +6,6 @@
         <div class="alert alert-success" role="alert">
             {{session('deleted')}}
         </div>
-            
         @endif
         <div class="d-flex justify-content-between">
             <h2> Posts' List</h2>

@@ -30,4 +30,6 @@ Route::middleware('auth')
 });
 
 //Rotte Pubbliche
-Route::get('/', 'HomeController@index')->name('home');
+//Route::get('/', 'HomeController@index')->name('home');
+// Per la parte di fron-office dobbiamo aggiungere una rotta di fallback che va mappare tutte le rotte non intercettate nelle istruzioni precedenti
+Route::get('{any?}', 'HomeController@index')->where('any', '.*')->name('home');

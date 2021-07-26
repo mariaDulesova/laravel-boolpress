@@ -21,7 +21,7 @@
         </div>
         <div>
             <a href="{{ route('admin.posts.index') }}" class="btn btn-secondary"> Back to Posts List </a>
-            <button type="submit"class="btn btn-success">SAVE</button>
+            <button type="submit"class="btn btn-success">UPDATE</button>
         </div>
     </form>
     
