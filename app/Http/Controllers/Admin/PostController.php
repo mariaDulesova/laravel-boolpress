@@ -119,7 +119,6 @@ class PostController extends Controller
 
         if($post->title != $data["title"]) {
             $slug = $this->generateSlug($data);
-
             $data["slug"] = $slug;
         }
 
@@ -137,6 +136,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post=Post::findOrFail($id);
+        $post->delete();
+        return redirect()->route('admin.posts.index')->with('deleted', $post->title.' has been deleted succesfully');
     }
 }

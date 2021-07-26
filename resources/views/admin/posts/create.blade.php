@@ -2,27 +2,29 @@
 
 @section('content')
     <div class="container">
-        <form action="{{route('admin.posts.store')}}" method="POST">
+        <h2> Create New Post</h2>
+        <form action="{{ route('admin.posts.store') }}" method="POST">
             @csrf
             @method('POST')
             <div class="form-group">
-                <label for="title">Titolos</label>
+                <label for="title" class="mt-4">Title</label>
                 <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Please enter the title..." name="title" value="{{ old('title') }}">
                 @error('title')
-                    <small class="text-danger">{{ $message }}</small>
+                    <p> <small class="text-danger">{{ $message }} </small></p>
                 @enderror
 
-                <label for="exampleFormControlTextarea1">Example textarea</label>
-                <textarea class="form-control @error('content') is-invalid @enderror" " id="exampleFormControlTextarea1" rows="3" name="content">{{ old('content') }}</textarea>
+                <label for="content" class="mt-4">Content</label>
+                <textarea class="form-control @error('content') is-invalid @enderror" id="content" rows="10" name="content" placeholder="Please enter the text...">{{ old('content') }}</textarea>
                 @error('content')
-                    <small class="text-danger">{{ $message }}</small>
+                    <p> <small class="text-danger">{{ $message }} </small></p>
                 @enderror
             </div>
+            <div>
+                <a href="{{ route('admin.posts.index')}}" class="btn btn-secondary"> Back to Posts List </a>
+                <button class="btn btn-success">CREATE</button>
+            </div>
         </form>
-        <div>
-            <a href="{{ route('admin.posts.index')}}" class="btn btn-secondary"> Back to Posts List </a>
-            <button class="btn btn-success">CREATE</button>
-        </div>
+        
     </div>
     
 @endsection
