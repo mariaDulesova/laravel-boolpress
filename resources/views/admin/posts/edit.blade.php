@@ -24,7 +24,8 @@
                     <select name="category_id" id="category_id" class="form-control @error('category_id')is-invalid @enderror">
                         <option value="">-- Select Category --</option>
                         @foreach ($categories as $category)
-                            <option value="{{$category->id}}" {{ ($category->id == old('category_id', $category->name)) ? 'selected' :''}}>{{ $category->name }}</option>   
+                            <option value="{{$category->id}}" {{ ($category->id == old('category_id', $post->category_id )) ? 'selected' :''}}>{{ $category->name }}</option>   
+                            {{-- al posto di $post->category_id, posso usare anche $category->name --}}
                         @endforeach
                     </select>
                     @error('category_id')

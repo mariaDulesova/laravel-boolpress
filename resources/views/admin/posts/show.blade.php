@@ -6,9 +6,11 @@
         <h2>
             {{$post->title}}
             @if ($post->category)
-                <span class="badge badge-pill badge-info "> {{$post->category->name}}</span>
+                <a href=" {{ route('admin.categories.show', $post->category->id) }}" class="badge badge-pill badge-info "> {{ $post->category->name}}</a>     
+            @else
+                <small class="badge badge-pill badge-info"> No category</small>
             @endif
-            
+               
         </h2>
         <p> {{$post->slug}}</p>
         <p> {{$post->content}}</p>
