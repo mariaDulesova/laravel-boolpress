@@ -18,6 +18,20 @@
                 @error('content')
                     <p> <small class="text-danger">{{ $message }} </small></p>
                 @enderror
+                <div class="mt-4">
+                    <label for="category_id">Category</label>
+                    <div>
+                        <select name="category_id" id="category_id" class="form-control @error('category_id')is-invalid @enderror">
+                            <option value="">-- Select Category --</option>
+                            @foreach ($categories as $category)
+                                <option value="{{$category->id}}" {{ ($category->id == old('category_id')) ? 'selected' :''}}>{{ $category->name }}</option>   
+                            @endforeach
+                        </select>
+                        @error('category_id')
+                            <p> <small class="text-danger">{{ $message }} </small></p>
+                        @enderror
+                    </div> 
+                </div>   
             </div>
             <div>
                 <a href="{{ route('admin.posts.index')}}" class="btn btn-secondary"> Back to Posts List </a>

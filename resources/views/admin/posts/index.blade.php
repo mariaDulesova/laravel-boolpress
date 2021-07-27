@@ -18,6 +18,7 @@
                     <th>ID</th>
                     <th>Title</th>
                     <th>Slug</th>
+                    <th>Category</th>
                     <th colspan="3">Actions</th>
                 </tr>
             </thead>
@@ -27,6 +28,9 @@
                         <td>{{$post->id}}</td>
                         <td>{{$post->title}}</td>
                         <td>{{$post->slug}}</td>
+                        <td>
+                            {{($post->category) ? $post->category->name : ''}}
+                        </td>
                         <td> 
                             <a href="{{route('admin.posts.show', $post->id)}}" class="btn"><i class="fas fa-binoculars fa-2x text-success"></i></a> 
                         </td>

@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Category;
 use Illuminate\Support\Str;
-use PhpParser\Node\Stmt\Foreach_;
+
 
 class CategoriesTableSeeder extends Seeder
 {

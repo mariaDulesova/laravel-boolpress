@@ -3,7 +3,13 @@
 @section('content')
     
     <div class="container">
-        <h2>{{$post->title}}</h2>
+        <h2>
+            {{$post->title}}
+            @if ($post->category)
+                <span class="badge badge-pill badge-info "> {{$post->category->name}}</span>
+            @endif
+            
+        </h2>
         <p> {{$post->slug}}</p>
         <p> {{$post->content}}</p>
         <div>
