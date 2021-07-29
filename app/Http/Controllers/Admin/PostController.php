@@ -4,16 +4,18 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Post;
 use Illuminate\Support\Str;
+use App\Post;
 use App\Category;
+use App\Tag;
 
 class PostController extends Controller
 {
     private $postValidationArray = [
         'title' => 'required|max:255',
         'content' => 'required',
-        'category_id' => 'nullable|exists:categories,id'
+        'category_id' => 'nullable|exists:categories,id', //puo' essere campo vuoto | verifica che la category selezionato esiste nel DB
+        'tags'=> 'exists:tags,id' //verifica che il tag selezionato esiste nel DB
     ];
     private function generateSlug($data) {
         $slug = Str::slug($data["title"], '-'); // titolo-articolo-3
@@ -54,7 +56,8 @@ class PostController extends Controller
     public function create()
     {   
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -77,6 +80,11 @@ class PostController extends Controller
         $newPost->fill($data); // aggiungiamo $fillable nel Model (Post)
 
         $newPost->save();
+
+        //Devo assegnare i tags al post che ho creato
+        if(array_key_exists('tags', $data)){ 
+            $newPost->tags()->attach($data['tags']); //Se la chiave 'tags' esiste nell'array $data, assegna ('attach') al post i tags
+        }
 
         return redirect()->route('admin.posts.show', $newPost->id);
 
@@ -104,7 +112,8 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $tags = Tag::all();
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -125,8 +134,14 @@ class PostController extends Controller
             $slug = $this->generateSlug($data);
             $data["slug"] = $slug;
         }
-
         $post->update($data);
+
+        //Gestisco la modifica/aggiornamento dei tags
+        if(array_key_exists('tags', $data)){
+            $post->tags()->sync($data['tags']); // Se al post sono gia' associati i tag, sincronizza (SYNC) con quelli nuovi/modificati
+        } else {
+            $post->tags()->detach(); //Se ho aggiornato il post togliendo tutti i tag, togli (DETACH) i tags
+        }
 
         return redirect()->route('admin.posts.show', $post->id);
 
