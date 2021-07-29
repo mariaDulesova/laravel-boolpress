@@ -27,7 +27,8 @@ Route::middleware('auth')
     ->group(function(){
         Route::get('/', 'HomeController@index')->name('home');
         Route::resource('posts', 'PostController');
-        Route:: get('/categories/{category}', 'CategoryController@show')->name('categories.show');
+        Route::get('/categories/{category}', 'CategoryController@show')->name('categories.show');
+        Route::get('/tags/{tag}', 'TagController@show')->name('tags.show');
 });
 
 //Rotte Pubbliche
