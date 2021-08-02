@@ -1,20 +1,27 @@
 <template>
-    <section class="container" v-if="(post)">
-        <h2>{{ post.title }}</h2>
-        <h3 class="badge badge-secondary" v-if="(post.category)">{{ post.category.name }}</h3>
-        <p>{{  post.content }}</p>
-        <h4 
-            class="badge badge-success"
-            v-for="tag in post.tags"
-            :key ="`tag-${tag.id}`"
-            > 
-            {{ tag.name}} 
-        </h4>
+    <section>
+        <div class="container" v-if="(post && !loading)">
+            <h2>{{ post.title }}</h2>
+            <h3 class="badge badge-secondary" v-if="(post.category)">{{ post.category.name }}</h3>
+            <p>{{  post.content }}</p>
+            <h4 
+                class="badge badge-success"
+                v-for="tag in post.tags"
+                :key ="`tag-${tag.id}`"
+                > 
+                {{ tag.name}} 
+            </h4>
+        </div>
+        <Loader v-else-if="(loading)"/>
+        <!-- <div v-else>
+            <p>Page not found</p>
+        </div> -->
         <div>
             <router-link :to="{ name: 'blog'}" class="btn btn-secondary mt-4">Back to articles</router-link>
-        </div>   
+        </div> 
     </section>
-    <Loader v-else/>
+        
+
 </template>
 
 <script>
@@ -26,7 +33,8 @@ export default {
     },
     data() {
         return{
-            post: null
+            post: null,
+            loading:true
         }
     },
     created() {
@@ -40,6 +48,7 @@ export default {
                     res=> {
                         //console.log(res.data);
                         this.post=res.data;
+                        this.loading=false;
                     }
                 )
                 .catch(

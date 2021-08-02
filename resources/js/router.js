@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Blog from './pages/Blog';
 import Contacts from './pages/Contacts';
 import SinglePost from './pages/SinglePost';
+import NotFound from './pages/NotFound';
 
 // 4. Creo le rotte
 const router = new VueRouter(
@@ -36,6 +37,12 @@ const router = new VueRouter(
                 path:'/blog/:slug',
                 name:'single-post',
                 component: SinglePost
+            },
+            {
+                //Questa rotta gestisce 404, va inserita sempre per ultima
+                path: '*',
+                name:'not-found',
+                component: NotFound
             }
 
         ] 
