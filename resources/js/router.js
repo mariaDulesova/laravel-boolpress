@@ -9,6 +9,7 @@ Vue.use(VueRouter)
 import Home from './pages/Home';
 import Blog from './pages/Blog';
 import Contacts from './pages/Contacts';
+import SinglePost from './pages/SinglePost';
 
 // 4. Creo le rotte
 const router = new VueRouter(
@@ -31,6 +32,11 @@ const router = new VueRouter(
                 name:'contacts',
                 component: Contacts
             },
+            {
+                path:'/blog/:slug',
+                name:'single-post',
+                component: SinglePost
+            }
 
         ] 
     }

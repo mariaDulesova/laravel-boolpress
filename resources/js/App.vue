@@ -20,14 +20,10 @@ export default {
         Header,
         Footer,
     }
-    
-
-
-
-    
+ 
 }
 </script>
 
 <style lang="scss">
-
+    @import '../sass/app.scss';
 </style>

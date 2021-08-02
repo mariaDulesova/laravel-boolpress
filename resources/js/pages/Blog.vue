@@ -1,5 +1,5 @@
 <template>
-    <section class="container">
+    <section class="container" v-if='posts.length>0'>
          <h2 class="text-center">The Latest Articles</h2>
             <div class="row">
                 <Card 
@@ -31,15 +31,18 @@
                 </button> 
             </div>
     </section>
+    <Loader v-else/>
 </template>
 
 <script>
 import Card from '../components/Card';
+import Loader from '../components/Loader';
 
 export default {
     name:'Blog',
     components: {
-        Card
+        Card,
+        Loader
     },
     data(){
         return {
@@ -55,7 +58,7 @@ export default {
                 .get(`http://127.0.0.1:8000/api/posts?page=${page}`)
                 .then(
                     res=>{
-                        console.log(res.data.data);
+                        //console.log(res.data.data);
                         this.posts = res.data.data;
                         this.current_page = res.data.current_page;
                         this.last_page = res.data.last_page

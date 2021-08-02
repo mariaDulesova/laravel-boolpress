@@ -4,8 +4,9 @@
             <div class="card-body">
                 <h5 class="card-title mb-2 "> {{ item.title }}</h5>
                 <p class="card-text"> {{ textExerpt(item.content) }}</p>
-                <a href="#" class="card-link">Read more</a>
-                <!-- <a href="#" class="card-link">Another link</a> -->
+                <router-link :to="{ name: 'single-post', params: {slug: item.slug}}">Read more</router-link>
+                <!-- <a href="#" class="card-link">Read more</a> -->
+                
             </div>
         </div>
     </div>

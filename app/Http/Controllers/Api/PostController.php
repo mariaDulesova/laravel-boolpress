@@ -8,9 +8,19 @@ use App\Post;
 
 class PostController extends Controller
 {
+    // Recupero archivio dei post
     public function index() {
         // $posts = Post::all();
         $posts = Post::paginate(6);
         return response()->json($posts);
+    }
+
+    // Recupero dettaglio del post
+    public function show($slug){
+        $post=Post::where('slug', $slug)
+        ->with('category', 'tags')
+        ->first();
+
+        return response()->json($post);
     }
 }
