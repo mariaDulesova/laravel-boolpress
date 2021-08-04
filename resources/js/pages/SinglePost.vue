@@ -1,8 +1,8 @@
 <template>
     <section>
-        <div class="container" v-if="(post && !loading)">
+        <div class="container" v-if="(!loading && JSON.stringify(post) !='{}')">
             <h2>{{ post.title }}</h2>
-            <h3 class="badge badge-secondary" v-if="(post.category)">{{ post.category.name }}</h3>
+            <router-link :to="{ name: 'category', params: { slug: post.category.slug }}" class="badge badge-secondary mb-3" v-if="(post.category)">{{ post.category.name }}</router-link>
             <div class="row">
                 <div class="col">
                     <p>{{  post.content }}</p>  
@@ -13,18 +13,19 @@
             </div>
             
             <h4 
-                class="badge badge-success"
+                class="badge badge-success mr-2"
                 v-for="tag in post.tags"
                 :key ="`tag-${tag.id}`"
-                > 
+                >
                 {{ tag.name}} 
             </h4>
         </div>
-        <Loader v-else-if="(loading)"/>
+        <NotFound v-else-if ="JSON.stringify(post)=='{}' && !loading"/>
+        <Loader v-else/>
         <!-- <div v-else>
             <p>Page not found</p>
         </div> -->
-        <div>
+        <div class="container">
             <router-link :to="{ name: 'blog'}" class="btn btn-secondary mt-4">Back to articles</router-link>
         </div> 
     </section>
@@ -33,11 +34,14 @@
 </template>
 
 <script>
-import Loader from '../components/Loader'
+import Loader from '../components/Loader';
+import NotFound from '../pages/NotFound';
+
 export default {
     name: 'SinglePost',
     components: {
-        Loader
+        Loader,
+        NotFound
     },
     data() {
         return{
