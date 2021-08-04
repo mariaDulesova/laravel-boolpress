@@ -3,7 +3,15 @@
         <div class="container" v-if="(post && !loading)">
             <h2>{{ post.title }}</h2>
             <h3 class="badge badge-secondary" v-if="(post.category)">{{ post.category.name }}</h3>
-            <p>{{  post.content }}</p>
+            <div class="row">
+                <div class="col">
+                    <p>{{  post.content }}</p>  
+                </div>
+                <div class="col">
+                    <img :src=" post.cover" :alt="post.title">
+                </div>
+            </div>
+            
             <h4 
                 class="badge badge-success"
                 v-for="tag in post.tags"
@@ -60,6 +68,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped scss="lang">
+    img{
+        max-width: 100%;
+    }
 </style>

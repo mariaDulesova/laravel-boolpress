@@ -2,8 +2,9 @@
     <div class="col-4 d-flex my-3">
         <div class="card" style="width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title mb-2 "> {{ item.title }}</h5>
-                <p class="card-text"> {{ textExerpt(item.content) }}</p>
+                <img class="card-img-top" :src="item.cover" :alt="item.title">
+                <h5 class="card-title mb-2 mt-4"> {{ item.title }}</h5>
+                <p class="card-text "> {{ textExerpt(item.content) }}</p>
                 <router-link :to="{ name: 'single-post', params: {slug: item.slug}}">Read more</router-link>
                 <!-- <a href="#" class="card-link">Read more</a> -->
                 

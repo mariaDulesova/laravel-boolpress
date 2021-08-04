@@ -141,6 +141,14 @@ class PostController extends Controller
             $slug = $this->generateSlug($data);
             $data["slug"] = $slug;
         }
+        //Devo assegnare la cover al post che sto creando
+        if(array_key_exists('cover', $data)) {
+            if($post->cover) {
+                Storage::delete($post->cover); //Gestisce la cancellazione del file dal server
+            }
+            $data['cover'] = Storage::put('post_covers', $data['cover']); // Se la cover esiste nell'array $data, salvo l'img caricata
+        }
+
         $post->update($data);
 
         //Gestisco la modifica/aggiornamento dei tags
@@ -163,6 +171,9 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post=Post::findOrFail($id);
+        if($post->cover) {
+            Storage::delete($post->cover);
+        }
         $post->delete();
         return redirect()->route('admin.posts.index')->with('deleted', $post->title.' has been deleted succesfully');
     }

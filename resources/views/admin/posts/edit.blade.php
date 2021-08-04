@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2> Update {{ $post->title}}</h2>
-    <form action="{{route('admin.posts.update', $post->id)  }}" method="POST">
+    <form action="{{route('admin.posts.update', $post->id)  }}" method="POST" enctype="multipart/form-data" >
         @csrf
         @method('PATCH')
         <div class="form-group">
@@ -20,6 +20,20 @@
             @error('content')
                 <p><small class="text-danger">{{ $message }}</small></p>
             @enderror
+
+            {{-- Add Cover --}}
+            @if ($post->cover)
+                <img src=" {{ asset('storage/'.$post->cover)}}" alt="{{$post->title}}" width='150' class="mt-4">
+            @else
+                <p class="font-weight-bold mt-4"> No cover to display</p>
+            @endif
+            <div class="form-group mt-4">
+                <label for="cover">Add Cover</label>
+                <input type="file" class="form-control-file @error('cover') is-invalid @enderror" id="cover" name="cover" >
+                @error('cover')
+                    <p> <small class="text-danger">{{ $message }} </small></p>
+                @enderror
+            </div>
 
             {{-- Post Category --}}
             <div class="mt-4">
