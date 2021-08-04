@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use App\Post;
 use App\Category;
 use App\Tag;
@@ -15,7 +16,8 @@ class PostController extends Controller
         'title' => 'required|max:255',
         'content' => 'required',
         'category_id' => 'nullable|exists:categories,id', //puo' essere campo vuoto | verifica che la category selezionato esiste nel DB
-        'tags'=> 'exists:tags,id' //verifica che il tag selezionato esiste nel DB
+        'tags'=> 'exists:tags,id', //verifica che il tag selezionato esiste nel DB
+        'cover'=>'nullable|image|max:2048' //verifica che il file che carichiamo pue' non esistere, ha il formato di images e le dimensioni massime sono 2mb (le dimensioni vanno sempre indicati in kb)
     ];
     private function generateSlug($data) {
         $slug = Str::slug($data["title"], '-'); // titolo-articolo-3
@@ -75,8 +77,13 @@ class PostController extends Controller
         $newPost = new Post();
 
         $slug = $this->generateSlug($data);
-
         $data['slug'] = $slug;
+
+        //Devo assegnare la cover al post che sto creando
+        if(array_key_exists('cover', $data)) {
+            $data['cover'] = Storage::put('post_covers', $data['cover']); // Se la cover esiste nell'array $data, salvo l'img caricata
+        }
+
         $newPost->fill($data); // aggiungiamo $fillable nel Model (Post)
 
         $newPost->save();

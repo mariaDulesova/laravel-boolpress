@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h2> Create New Post</h2>
-        <form action="{{ route('admin.posts.store') }}" method="POST">
+        <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
             <div class="form-group">
@@ -20,6 +20,15 @@
                 @error('content')
                     <p> <small class="text-danger">{{ $message }} </small></p>
                 @enderror
+
+                {{-- Add Cover --}}
+                <div class="form-group mt-4">
+                    <label for="cover">Add Cover</label>
+                    <input type="file" class="form-control-file @error('cover') is-invalid @enderror" id="cover" name="cover" >
+                    @error('cover')
+                        <p> <small class="text-danger">{{ $message }} </small></p>
+                    @enderror
+                </div>
 
                 {{-- Post Category --}}
                 <div class="mt-4">
