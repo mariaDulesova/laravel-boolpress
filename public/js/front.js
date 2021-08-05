@@ -2355,6 +2355,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Contacts',
   data: function data() {
@@ -2362,20 +2365,30 @@ __webpack_require__.r(__webpack_exports__);
       name: '',
       email: '',
       message: '',
-      errors: {}
+      errors: {},
+      success: false,
+      sending: false
     };
   },
   methods: {
     sendForm: function sendForm() {
       var _this = this;
 
+      this.sending = true;
       axios.post('http://127.0.0.1:8000/api/leads', {
         name: this.name,
         email: this.email,
         message: this.message
       }).then(function (res) {
+        _this.sending = false;
+
         if (res.data.errors) {
+          //se compare al meno un errore di validazione
           _this.errors = res.data.errors;
+          _this.success = false;
+        } else {
+          //salvo il lead nel db
+          _this.errors = {}, _this.name = '', _this.email = '', _this.message = '', _this.success = true;
         }
       })["catch"](function (err) {
         console.log(err);
@@ -4298,6 +4311,28 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "col" }, [
         _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.success,
+                expression: "success"
+              }
+            ],
+            staticClass: "alert alert-success"
+          },
+          [
+            _c("p", [
+              _vm._v(
+                "The message has been send successfully, thank you for contacting us. We will reply to you within 24h"
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
           "form",
           {
             on: {
@@ -4324,6 +4359,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.name },
                   attrs: { type: "text", id: "name", placeholder: "Your Name" },
                   domProps: { value: _vm.name },
                   on: {
@@ -4365,6 +4401,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.name },
                   attrs: {
                     type: "email",
                     id: "email",
@@ -4411,6 +4448,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.name },
                   attrs: {
                     id: "message",
                     rows: "5",
@@ -4440,8 +4478,11 @@ var render = function() {
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "btn btn-secondary", attrs: { type: "submit" } },
-              [_vm._v(" Send ")]
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { type: "submit", disabled: _vm.sending }
+              },
+              [_vm._v(" " + _vm._s(_vm.sending ? "Sending" : "Send") + " ")]
             )
           ]
         )

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Lead;
 
 class LeadController extends Controller
 {
@@ -23,7 +24,16 @@ class LeadController extends Controller
             return response()->json([
                 'errors'=>$validator->errors()
             ]);
-        }
+        };
+
+        //2. Salvo i dati inseriti nel DB
+            //a. Creo un istanza
+            $lead = new Lead();
+            //b. Assegno i valori con l'aiuto di fillable
+            $lead->fill($data);
+            //c. Salvo i dati
+            $lead->save();
+
         return response()->json($data);
     }
 }
