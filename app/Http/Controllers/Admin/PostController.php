@@ -72,7 +72,7 @@ class PostController extends Controller
     {
         $data = $request->all();
         
-        $request->validate($this->postValidationArray);
+        $request->validate($this->postValidationArray); //Faccio la validazione dei dati
 
         $newPost = new Post();
 

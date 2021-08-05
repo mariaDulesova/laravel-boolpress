@@ -24,5 +24,6 @@ Route::namespace('Api')
         Route::get('posts/{slug}', 'PostController@show');
         Route::get('categories', 'CategoryController@index');
         Route::get('categories/{slug}', 'CategoryController@show');
+        Route::post('leads', 'LeadController@store');
     }
 );
