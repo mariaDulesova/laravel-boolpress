@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactMessage;
 use App\Lead;
 
 class LeadController extends Controller
@@ -17,7 +19,7 @@ class LeadController extends Controller
             'name'=>'required|max:60',
             'email'=> 'required|max:60',
             'message'=>'required'
-             //aggiungendo un altro array in formato: 'name.requred'=>'Qui personalizzo il messaggio di errore
+             //aggiungendo un altro array in formato: 'name.requred'=>'Qui personalizzo il messaggio di errore'
         ]);
 
         if($validator->fails()) {
@@ -34,6 +36,11 @@ class LeadController extends Controller
             //c. Salvo i dati
             $lead->save();
 
-        return response()->json($data);
+        //3. Invio mail ad admin
+        Mail::to('admin@sito.it')->send(new ContactMessage($lead)); //Here you define email adress to which all emails will be send
+
+        return response()->json([
+            'success'=>true
+        ]);
     }
 }
