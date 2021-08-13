@@ -13,6 +13,8 @@ class Post extends Model
         'category_id',
         'cover'
     ];
+
+    // Relazione posts-category
     public function category() {
         return $this->belongsTo('App\Category');
     }

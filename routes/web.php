@@ -20,10 +20,10 @@ Auth::routes();
 
 
 //tutte le rotte protette da autenticazione
-Route::middleware('auth')
-    ->namespace('Admin')
-    ->name('admin.')
-    ->prefix('admin')
+Route::middleware('auth') //autenticazione
+    ->namespace('Admin') //controller
+    ->name('admin.') //nome rotte
+    ->prefix('admin') //url rotte
     ->group(function(){
         Route::get('/', 'HomeController@index')->name('home');
         Route::resource('posts', 'PostController');

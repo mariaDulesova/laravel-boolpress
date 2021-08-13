@@ -16,9 +16,7 @@
     </head>
     <body>
         {{-- Inseriamo un <div> #root dove andra' inserito Vue --}}
-        <div id="root">
-
-        </div>
+        <div id="root"></div>
        
         {{-- Collegamento al foglio JS --}}
         <script src='{{ asset('js/front.js')}}'></script>

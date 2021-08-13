@@ -24,10 +24,6 @@ class CategoriesTableSeeder extends Seeder
             $newCategory->slug = Str::slug($category, '-');
             //3.Salvo
             $newCategory->save();
-
-        }
-        
-
-        
+        }  
     }
 }

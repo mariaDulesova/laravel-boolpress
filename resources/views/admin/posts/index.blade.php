@@ -31,12 +31,15 @@
                         <td>
                             {{($post->category) ? $post->category->name : ''}}
                         </td>
+                        {{-- Pulsante show --}}
                         <td> 
                             <a href="{{route('admin.posts.show', $post->id)}}" class="btn"><i class="fas fa-binoculars fa-2x text-success"></i></a> 
                         </td>
+                        {{-- Pulsante edit --}}
                         <td>
                             <a href="{{route('admin.posts.edit', $post->id)}}" class="btn"><i class="fas fa-edit fa-2x text-warning"></i></a>
                         </td>
+                        {{-- Pulsante delete --}}
                         <td>
                             <form action="{{ route('admin.posts.destroy', $post->id)}}" method="POST" onSubmit="return confirm('Are you sure you want to delete {{$post->title}} ?')">
                                 @csrf
